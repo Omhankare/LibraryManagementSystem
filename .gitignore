@@ -1,0 +1,9 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Compiled output
+/out/
+
+# Database credentials
+db.properties
