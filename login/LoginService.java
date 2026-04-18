@@ -1,8 +1,9 @@
 package LibraryManagementSystem.login;
 
+import LibraryManagementSystem.dao.DatabaseServiceDAO;
 import LibraryManagementSystem.dto.AdminMenu;
-import LibraryManagementSystem.dao.LibraryDAO;
 import LibraryManagementSystem.dao.LoginDAO;
+import LibraryManagementSystem.dto.StudentMenu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,7 +18,7 @@ public class LoginService {
         System.out.println("Please provide password: ");
         String password = sc.nextLine();
 
-        try(Connection conn = LibraryDAO.getConnection()){
+        try(Connection conn = DatabaseServiceDAO.getConnection()){
             LoginDAO loginDAO = new LoginDAO();
             String userType = loginDAO.doLogin(conn,userName,password);
 
@@ -33,6 +34,7 @@ public class LoginService {
                 AdminMenu.displayAdminMenu(conn);
             }else{
                 //display student menu
+                StudentMenu.displayStudentMenu(conn);
             }
 
         } catch (SQLException e) {

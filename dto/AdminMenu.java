@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import LibraryManagementSystem.service.StudentService;
+
+
 public class AdminMenu {
 
     public static void displayAdminMenu(Connection conn) throws SQLException {
@@ -43,8 +46,10 @@ public class AdminMenu {
                     bookService.getAllBooks(conn);
                     break;
                 case 5:
+                    StudentService.addStudent(conn);
                     break;
                 case 6:
+                    StudentService.getAllStudents(conn);
                     break;
                 case 7:
                     System.out.println("Thank You for Using Library Management System.");
@@ -112,6 +117,8 @@ public class AdminMenu {
                 break;
         }
     }
+
+
 
 
 }

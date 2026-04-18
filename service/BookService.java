@@ -1,7 +1,9 @@
 package LibraryManagementSystem.service;
 
 import LibraryManagementSystem.dao.BookDAO;
+import LibraryManagementSystem.dao.StudentDAO;
 import LibraryManagementSystem.dto.Book;
+import LibraryManagementSystem.dto.BookingDetails;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -222,6 +224,71 @@ public class BookService {
         }
     }
 
+    public void checkOutBook(Connection conn) throws SQLException {
+        StudentDAO dao = new StudentDAO();
+
+        System.out.println("Enter Reg Number:");
+        String regNum = sc.nextLine();
+
+        boolean isExist = dao.getStudentByRegNo(conn, regNum);
+
+        if (!isExist) {
+            System.out.println("Student is not Registered. Get Registered First.");
+            return;
+        }
+
+        getAllBooks(conn);
+
+        System.out.println("Enter Serial No of Book to be Checked Out.");
+        int sNo = sc.nextInt();
+
+        BookDAO bookDAO = new BookDAO();
+        Book book = bookDAO.getBooksBySno(conn, sNo);
+
+        if (book == null) {
+            System.out.println("Book is not available.");
+            return;
+        }
+
+        book.setBookQty(book.getBookQty() - 1);
+
+        int id = dao.getStudentByRegNo_(conn, regNum);
+
+        dao.saveBookingDetails(conn, id, book.getId(), 1);
+        bookDAO.updateBookQty(conn, book);
+    }
+
+    public void checkInBook(Connection conn) throws SQLException {
+        StudentDAO dao = new StudentDAO();
+
+        System.out.println("Enter Reg Number:");
+        String regNum = sc.nextLine();
+
+        boolean isExist = dao.getStudentByRegNo(conn, regNum);
+
+        if (!isExist) {
+            System.out.println("Student is not Registered. Get Registered First.");
+            return;
+        }
+
+        int id = dao.getStudentByRegNo_(conn, regNum);
+        List<BookingDetails> bookingDetails = dao.getBookDetailsId(conn, id);
+
+        bookingDetails.stream().forEach(b -> System.out.println(b.srNo + "\t\t\t" + b.bookName + "\t\t\t" + b.authorName));
+
+        System.out.println("Enter Serial Number of Book to be Checked In:");
+        int sNo = sc.nextInt();
+
+        BookingDetails filterDetails = bookingDetails.stream().filter(b -> b.getSrNo() == sNo).findAny().orElse(null);
+
+        BookDAO bookDao = new BookDAO();
+        Book book = bookDao.getBooksBySno(conn, sNo);
+        book.setBookQty(book.getBookQty() + 1);
+
+        bookDao.updateBookQty(conn, book);;
+        dao.deleteBookingDetails(conn, filterDetails.getId());
+
+    }
 
 
 }

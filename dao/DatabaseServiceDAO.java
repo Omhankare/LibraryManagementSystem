@@ -5,9 +5,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-public class LibraryDAO {
+public class DatabaseServiceDAO {
 
-    private static final Properties props = new Properties();
+    private static final Properties props = new Properties() ;
 
     static {
         try {
