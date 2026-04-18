@@ -1,38 +1,57 @@
-# 📚 Library Management System (Java + JDBC)
+# 📚 Library Management System (Java + JDBC + React Planned)
+<img width="1003" height="1006" alt="Screenshot 2026-04-18 144928" src="https://github.com/user-attachments/assets/d97d0646-cef4-4304-953b-2bdeebcb4707" />
+<img width="1020" height="1056" alt="Screenshot 2026-04-18 145004" src="https://github.com/user-attachments/assets/41ff1f5f-fc31-4efa-b718-a9739acf240c" />
 
-A **console-based Library Management System** developed using **Core Java and JDBC**.  
-The project follows **DAO (Data Access Object)** and **DTO (Data Transfer Object)** design patterns and connects to a **MySQL database**.
+A **console-based Library Management System** built using **Core Java and JDBC**, following **DAO (Data Access Object)** and **DTO (Data Transfer Object)** design patterns.
 
-This project is actively evolving and will be extended with a **web interface (HTML/CSS)** and later migrated to **Spring Boot**.
-
----
-
-## 🚀 Features (Current)
-
-- Admin login authentication
-- Add new books to the library
-- Update book details:
-  - Book name
-  - Author name
-  - Quantity
-  - Serial number
-- Search books by:
-  - Serial number
-  - Author name
-- View all available books
-- JDBC-based database interaction
-- Clean separation of concerns using DAO & DTO patterns
-- Secure database configuration using properties file (no credentials in code)
+This project simulates a real-world library workflow with **Admin and Student roles**.
+It will be extended with a **modern frontend using React**, while keeping the current Java backend.
 
 ---
 
-## 🛠️ Technologies Used (Current)
+## 🚀 Features 
 
-- **Java**
+**🔐 Authentication System**
+- User Registration (Student)
+- Login system (Admin / Student)
+- Role-based access (admin / user)
+---
+**👨‍💼 Admin Functionalities**
+  - Add new books
+  - Update book details:
+    - Book name
+    - Author name
+    - Quantity
+    - Serial number
+  - View all books
+  - Search books by:
+    - Serial number
+    - Author name
+- Fetch all registered students
+- Register students manually
+---
+ **👨‍🎓 Student Functionalities**
+  - Self-registration
+  - Login access
+  - View available books (extendable)
+---
+**🧩 System Design**
+- DAO Layer → Database interaction
+- DTO Layer → Data transfer objects
+- Service Layer → Business logic
+- JDBC-based MySQL connectivity
+- Externalized DB configuration (db.properties)
+
+---
+
+## 🛠️ Technologies Used 
+
+- **Java (Core Java)**
 - **JDBC**
 - **MySQL**
 - **IntelliJ IDEA**
 - **Git & GitHub**
+- **React (Planned Frontend)**
 
 ---
 
@@ -43,17 +62,24 @@ LibraryManagementSystem/
 │
 ├── dao/                    (Database access logic - DAO layer)
 │   ├── BookDAO.java
-│   ├── LibraryDAO.java
-│   └── LoginDAO.java
+│   ├── DatabaseServiceDAO.java
+│   ├── LoginDAO.java
+|   ├── RegisterDAO.java  
+|   └── StudentDAO.java  
 │
 ├── dto/                    (Data Transfer Objects)
-│   └── Book.java
+|   ├── AdminMenu.java
+|   ├── Book.java
+|   ├── BookingDetails.java  
+│   └── StudentMenu.java
 │
-├── service/                (Business logic layer)
-│   └── BookService.java
+├── login/                (Authentication logic)
+|   ├── LoginService.java  
+│   └── RegisterService.java
 │
-├── login/                  (Authentication logic)
-│   └── LoginService.java
+├── Service/                  (Business logic layer)
+|   ├── BookService.java  
+│   └── StudentService.java
 │
 ├── LibraryManagementSystem.java   (Main entry point)
 ├── db.properties.example          (Sample DB configuration)
