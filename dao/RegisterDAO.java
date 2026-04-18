@@ -7,13 +7,14 @@ import java.sql.ResultSet;
 public class RegisterDAO {
     public boolean doRegister(Connection conn, String userName , String password){
 
-        String query = "INSERT INTO LOGIN(username,password) VALUES (?,?)";
+        String query = "INSERT INTO login(user_name, password, user_type) VALUES (?, ?, ?)";
 
         try(PreparedStatement ps = conn.prepareStatement(query)){
             ps.setString(1, userName);
             ps.setString(2, password);
+            ps.setString(3, "user");
 
-            int rows = ps.executeUpdate();  // ✅ correct
+            int rows = ps.executeUpdate();
 
             return rows > 0;
 
